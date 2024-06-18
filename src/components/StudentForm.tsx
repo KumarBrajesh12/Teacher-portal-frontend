@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
-import { addStudent } from '../features/studentSlice';
+import { addOrUpdateStudent, fetchStudents } from '../features/studentSlice';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -17,10 +17,14 @@ const StudentForm: React.FC = () => {
   const [marks, setMarks] = useState(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmit = () => {
-    dispatch(addStudent({ name, subject, marks }));
+  const handleSubmit = async () => {
+    await dispatch(addOrUpdateStudent({ name, subject, marks }));
     setOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(fetchStudents());
+  }, [dispatch]);
 
   return (
     <>

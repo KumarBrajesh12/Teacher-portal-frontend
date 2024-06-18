@@ -84,6 +84,27 @@ export const updateStudent = createAsyncThunk<Student, Student, { rejectValue: {
   }
 );
 
+export const addOrUpdateStudent = createAsyncThunk<void, Omit<Student, '_id'>, { rejectValue: { message: string } }>(
+  'students/addOrUpdateStudent',
+  async (student, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const token = getToken();
+      const state = getState() as { students: StudentState };
+      const existingStudent = state.students.students.find(s => s.name === student.name);
+
+      if (existingStudent) {
+        await dispatch(updateStudent({ ...existingStudent, ...student }));
+      } else {
+        await dispatch(addStudent(student));
+      }
+
+      await dispatch(fetchStudents());
+    } catch (error: any) {
+      return rejectWithValue({ message: error.response.data.message || 'Failed to add or update student' });
+    }
+  }
+);
+
 const studentSlice = createSlice({
   name: 'students',
   initialState,

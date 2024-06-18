@@ -21,7 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar } from '@mui/material';
+import { Avatar } from "@mui/material";
 
 const StudentList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -99,20 +99,22 @@ const StudentList: React.FC = () => {
         {students.map((student) => (
           <TableRow key={student._id}>
             <TableCell>
-  {editingId === student._id ? (
-    <TextField
-      value={editedStudent?.name || ''}
-      onChange={(e: any) => handleInputChange(e, 'name')}
-    />
-  ) : (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Avatar sx={{ bgcolor: 'blue', color: 'white', marginRight: 1 }}>
-        {student.name.charAt(0).toUpperCase()}
-      </Avatar>
-      {student.name}
-    </div>
-  )}
-</TableCell>
+              {editingId === student._id ? (
+                <TextField
+                  value={editedStudent?.name || ""}
+                  onChange={(e: any) => handleInputChange(e, "name")}
+                />
+              ) : (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar
+                    sx={{ bgcolor: "blue", color: "white", marginRight: 1 }}
+                  >
+                    {student.name.charAt(0).toUpperCase()}
+                  </Avatar>
+                  {student.name}
+                </div>
+              )}
+            </TableCell>
             <TableCell>
               {editingId === student._id ? (
                 <TextField
